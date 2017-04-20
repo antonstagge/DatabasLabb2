@@ -33,7 +33,7 @@ CREATE TABLE issue_procedure(
 #Patient table
 CREATE TABLE patient(
     patient_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ssn INT UNSIGNED NOT NULL UNIQUE,
+    ssn VARCHAR(10) NOT NULL UNIQUE,
     name VARCHAR(40),
     age INT UNSIGNED,
     female BOOL,
@@ -55,7 +55,7 @@ CREATE TABLE drug(
 #log table
 CREATE TABLE log(
     log_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    ssn INT UNSIGNED NOT NULL UNIQUE,
+    ssn VARCHAR(10) NOT NULL,
     name VARCHAR(40),
     age INT UNSIGNED,
     female BOOL,

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Multiselect from "./multiselect";
+import Multiselect from "./multiSelect";
 const client = require("./api/client");
 
 const tableStyle = {

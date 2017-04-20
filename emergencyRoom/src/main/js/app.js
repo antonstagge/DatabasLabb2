@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import PatientForm from "./patientForm";
 import DoctorForm from "./doctorForm";
-
+import Log from "./log";
 class App extends Component {
     constructor(props) {
         super(props);
@@ -42,7 +42,7 @@ class App extends Component {
                     );
                 break;
             case 3:
-                return (<h2>Maybe Log?</h2>);
+                return (<Log switchStage={this.switchStage}/>);
                 break;
             default: return (<h1>Something wrong</h1>);
         }

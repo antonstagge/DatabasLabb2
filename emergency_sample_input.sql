@@ -96,28 +96,28 @@ INSERT INTO issue_procedure (name, cost, issue) VALUES
 ("Ultrasonic Magnetic Stool Amputation", 2346, 10);
 
 INSERT INTO patient (ssn, name, age, female, priority, waiting_time, issue, team) VALUES
-(950102, "Anton Stagge", 22, False, 5, 10, 6, 4),
-(961112, "Cristian Bretti", 20, False, 3, 30, 5, 4),
-(911023, "Pelle", 13, False, 2, 40, 5, 4),
-(921312, "Stina", 40, True, 2, 34, 7, 4),
+(9501020078, "Anton Stagge", 22, False, 5, 10, 6, 4),
+(9611121111, "Cristian Bretti", 20, False, 3, 30, 5, 4),
+(9110231123, "Pelle", 13, False, 2, 40, 5, 4),
+(9213122131, "Stina", 40, True, 2, 34, 7, 4),
 
-(801203, "Carl", 50, False, 1, 20, 1, 1),
-(650808, "Johan", 80, False, 2, 20, 2, 1),
-(710103, "Carl", 44, False, 3, 40, 3, 1),
-(910505, "Elsa", 80, True, 4, 10, 2, 1),
+(8012035677, "Carl", 50, False, 1, 20, 1, 1),
+(6508084564, "Johan", 80, False, 2, 20, 2, 1),
+(7101034566, "Carl", 44, False, 3, 40, 3, 1),
+(9105056666, "Elsa", 80, True, 4, 10, 2, 1),
 
-(920102, "Saga", 55, True, 1, 40, 2, 2),
-(920304, "Johan-Carl", 66, False, 3, 40, 3, 2),
-(920401, "Sara", 77, True, 3, 40, 4, 2),
-(920402, "Emil", 24, False, 3, 40, 4, 2),
-(920502, "Lisa", 45, True, 4, 40, 3, 2),
+(9201026546, "Saga", 55, True, 1, 40, 2, 2),
+(9203044567, "Johan-Carl", 66, False, 3, 40, 3, 2),
+(9204014333, "Sara", 77, True, 3, 40, 4, 2),
+(9204025645, "Emil", 24, False, 3, 40, 4, 2),
+(9205024944, "Lisa", 45, True, 4, 40, 3, 2),
 
-(890101, "Fredde", 60, False, 3, 40, 4, 3),
-(890204, "Josefin", 76, True, 5, 40, 5, 3),
+(8901014667, "Fredde", 60, False, 3, 40, 4, 3),
+(8902040984, "Josefin", 76, True, 5, 40, 5, 3),
 
-(020310, "Erik", 12, False, 4, 40, 8, 5),
-(120305, "Lisbeth", 4, True, 4, 40, 9, 5),
-(950405, "Filipe", 46, False, 2, 40, 10, 5);
+(0203100547, "Erik", 12, False, 4, 40, 8, 5),
+(1203050123, "Lisbeth", 4, True, 4, 40, 9, 5),
+(9504050237, "Filipe", 46, False, 2, 40, 10, 5);
 
 INSERT INTO drug (name, cost) VALUES
 ("Alvedon", 10),

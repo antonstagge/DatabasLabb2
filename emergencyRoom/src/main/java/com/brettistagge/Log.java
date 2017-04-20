@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Log")
 public class Log {
     private @Id @GeneratedValue long logId;
-    private @NotNull @Column(unique = true) long ssn;
+    private @NotNull String ssn;
     private String name;
     private Integer age;
     private Boolean female;

@@ -16,7 +16,9 @@ const outerTdStyle = {
     margin: "5px",
     padding: "10px",
     border: "1px solid black",
-    borderCollapse: "collapse"
+    borderCollapse: "collapse",
+    width: "300px",
+    textAlign: "center"
 }
 
 class PatientForm extends Component {
@@ -32,7 +34,7 @@ class PatientForm extends Component {
         }
 
         this.submit = this.submit.bind(this);
-        this.toDoctorForm = this.toDoctorForm.bind(this);
+        this.toLog = this.toLog.bind(this);
         this.updateIssue = this.updateIssue.bind(this);
         this.updateTeam = this.updateTeam.bind(this);
         this.getTeams = this.getTeams.bind(this);
@@ -87,8 +89,8 @@ class PatientForm extends Component {
         });
     }
 
-    toDoctorForm() {
-        this.props.switchStage(1);
+    toLog() {
+        this.props.switchStage(3);
     }
 
     updateIssue(value) {
@@ -182,7 +184,7 @@ class PatientForm extends Component {
         console.log(sortedQueue);
         return (
             <div>
-                <button onClick={this.toDoctorForm}>Doctor Form</button>
+                <button onClick={this.toLog}>To Log</button>
                 <h1>Patient Form</h1>
                 <table style={tableStyle}>
                     <tbody>

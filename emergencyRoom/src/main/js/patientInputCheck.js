@@ -31,7 +31,7 @@ export default function patientInputCheck (patient) {
 }
 
 function validateSSN(ssn) {
-    if (ssn.length > 6) {
+    if (ssn.length != 10) {
         return false;
     }
 
