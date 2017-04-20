@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import SingleSelect from "./singleSelect";
+import patientInputCheck from "./patientInputCheck";
 const client = require("./api/client");
 
 const tableStyle = {
@@ -38,6 +39,7 @@ class PatientForm extends Component {
         this.getPatientsInQueue = this.getPatientsInQueue.bind(this);
         this.sortQueue = this.sortQueue.bind(this);
         this.makeQueue = this.makeQueue.bind(this);
+        this.calculateWaitingTime = this.calculateWaitingTime.bind(this);
     }
 
     componentDidMount() {
@@ -63,8 +65,26 @@ class PatientForm extends Component {
         patient["issue"] = this.state.selectedIssue;
         patient["team"] = this.state.selectedTeam;
 
-        console.log(patient);
-        //var newPatient = patientInputCheck(patient);
+        var newPatient = patientInputCheck(patient);
+
+        if (newPatient.error) {
+            alert(newPatient.error);
+            return;
+        }
+        newPatient["waitingTime"] = this.calculateWaitingTime(newPatient, this.state.queue);
+        console.log(newPatient);
+
+        client({
+            method: "POST",
+            path: "api/patients",
+            entity: newPatient,
+            headers: {'Content-Type': 'application/json'}
+        }).done(response => {
+            this.props.switchStage(1, response.entity);
+        }, badResponse => {
+            console.log(badResponse);
+            alert("Something went wrong. Error code: " + badResponse.status.code);
+        });
     }
 
     toDoctorForm() {
@@ -83,6 +103,16 @@ class PatientForm extends Component {
             selectedTeam: value
         });
         this.getPatientsInQueue(value)
+    }
+
+    calculateWaitingTime(patient, queue) {
+        var waitingTime = 0;
+        for (var i = 0; i < queue.length; i++) {
+            if (queue[i].priority >= patient.priority) {
+                waitingTime += queue[i].priority * 10;
+            }
+        }
+        return waitingTime;
     }
 
     getTeams(issue) {
@@ -170,11 +200,11 @@ class PatientForm extends Component {
                                         </tr>
                                         <tr>
                                             <th>Age</th>
-                                            <td style={innerTdStyle}><input ref="age" type="text" placeholder="Enter age..."/></td>
+                                            <td style={innerTdStyle}><input ref="age" type="number" placeholder="Enter age..."/></td>
                                         </tr>
                                         <tr>
                                             <th>SSN*</th>
-                                            <td style={innerTdStyle}><input ref="ssn" type="text" placeholder="Enter 6 didigt ssn..."/></td>
+                                            <td style={innerTdStyle}><input ref="ssn" type="number" placeholder="YYMMDD"/></td>
                                         </tr>
                                         <tr>
                                             <th>Gender</th>

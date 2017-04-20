@@ -1,22 +1,22 @@
 import React, {Component} from "react";
 import PatientForm from "./patientForm";
-
+import DoctorForm from "./doctorForm";
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
             stage: 0,
-            currentPatient: {
-                name: "testName"
-            }
+            currentPatient: {}
         }
 
         this.switchStage = this.switchStage.bind(this);
     }
 
-    switchStage(stage) {
+    switchStage(stage, patient) {
+        console.log(patient);
         this.setState({
-            stage: stage
+            stage: stage,
+            currentPatient: patient
         });
     }
 
@@ -29,8 +29,11 @@ class App extends Component {
                     );
                 break;
             case 1: 
-                console.log(this.state.currentPatient.name);
-                return (<h2>Doctor form</h2>);
+                return (
+                    <DoctorForm switchStage={this.switchStage}
+                        patient={this.state.currentPatient}
+                    />
+                    );
                 break;
             case 3:
                 return (<h2>Maybe Log?</h2>);
