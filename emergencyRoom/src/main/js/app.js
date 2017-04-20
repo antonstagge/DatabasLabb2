@@ -1,12 +1,25 @@
 import React, {Component} from "react";
 import PatientForm from "./patientForm";
 import DoctorForm from "./doctorForm";
+
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            stage: 0,
-            currentPatient: {}
+            stage: 1,
+            currentPatient: {
+                name: "Anton Stageg",
+                ssn: 950102,
+                age: 22,
+                female: false,
+                priority: 5,
+                waitingTime: 40,
+                _links: {
+                    issue: {
+                        href: "http://localhost:8080/api/patients/1/issue"
+                    }
+                }
+            }
         }
 
         this.switchStage = this.switchStage.bind(this);
