@@ -22,18 +22,11 @@ class DoctorForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            procedures: [
-                {label: "hej", value: "hejval"},
-                {label: "bajs", value: "bajsbal"},
-                {label: "balle", value: "balleval"},
-                {label: "bla", value: "bla"}
-            ],
-            drugs: [
-                {label: "hej", value: "hejval"},
-                {label: "bla", value: "blaval"}
-            ],
-            selectedProcedures: [],
-            selectedDrugs: [],
+            procedures: [],
+            drugs: [],
+            selectedProcedures: "",
+            selectedDrugs: "",
+            patientIssue: "",
             update: false
         }
 
@@ -65,12 +58,17 @@ class DoctorForm extends Component {
                 this.setState({update: !this.state.update});
             });    
         });
+
+        client({method: "GET", path: this.props.patient._links.issue.href}).done(response => {
+            this.setState({
+                patientIssue: response.entity.name
+            });
+        });
     }
 
     addProcedure(value, id) {
         var splitValues = value.split(",");
         if (splitValues.length > 3) {
-            console.log("got in");
             this.setState({
                 selectedProcedures: this.state.selectedProcedures
             });
@@ -84,7 +82,6 @@ class DoctorForm extends Component {
     addDrug(value, id) {
         var splitValues = value.split(",");
         if (splitValues.length > 3) {
-            console.log("got in");
             this.setState({
                 selectedDrugs: this.state.selectedDrugs
             });
@@ -96,7 +93,67 @@ class DoctorForm extends Component {
     }
 
     submit() {
-        console.log("submit click");
+        var log = {};
+        var patient = this.props.patient;
+        log["home"] = this.refs.home.checked;
+        if (patient.name) {
+            log["name"] = patient.name;
+        }
+        if (patient.age) {
+            log["age"] = patient.age;
+        }
+        if (patient.ssn) {
+            log["ssn"] = patient.ssn;
+        }
+        if (patient.female != undefined) {
+            log["female"] = patient.female;
+        }
+        if (patient.priority) {
+            log["priority"] = patient.priority;
+        }
+        if (patient.waitingTime != undefined) {
+            log["waitingTime"] = patient.waitingTime;
+        }
+        log["issueName"] = this.state.patientIssue;
+        if (this.state.selectedProcedures != "") {
+            var procedureNameAndCostList = this.state.selectedProcedures.split(",");
+            procedureNameAndCostList.map((oneProcedure, i) => {
+                var number = "";
+                if (i == 0) {
+                    number = "One";
+                } else if (i == 1) {
+                    number = "Two";
+                } else {
+                    number = "Three";
+                }
+                log["issueProcedure" + number + "Name"] = oneProcedure.split(".")[0];
+                log["issueProcedure" + number + "Cost"] = oneProcedure.split(".")[1];
+            });
+        }
+        if (this.state.selectedDrugs != "") {
+            var drugNameAndCostList = this.state.selectedDrugs.split(",");
+            drugNameAndCostList.map((oneDrug, i) => {
+                var number = "";
+                if (i == 0) {
+                    number = "One";
+                } else if (i == 1) {
+                    number = "Two";
+                } else {
+                    number = "Three";
+                }
+                log["drug" + number + "Name"] = oneDrug.split(".")[0];
+                log["drug" + number + "Cost"] = oneDrug.split(".")[1];
+            });
+        }
+
+        client({
+            method: "POST",
+            path: "api/logs",
+            entity: log,
+            headers: {'Content-Type': 'application/json'}
+        }).done(response => {
+            this.props.switchStage(3);
+        });
     }
 
     getPatientInfo(patient) {
@@ -137,7 +194,7 @@ class DoctorForm extends Component {
                 <td>{patient.priority}</td>
                 </tr>);
         }
-        if (patient.waitingTime) {
+        if (patient.waitingTime != undefined) {
             info.push(<tr key={6}>
                 <th>Waiting time</th>
                 <td>{patient.waitingTime}</td>

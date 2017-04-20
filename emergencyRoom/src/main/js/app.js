@@ -6,31 +6,24 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            stage: 1,
-            currentPatient: {
-                name: "Anton Stageg",
-                ssn: 950102,
-                age: 22,
-                female: false,
-                priority: 5,
-                waitingTime: 40,
-                _links: {
-                    issue: {
-                        href: "http://localhost:8080/api/patients/1/issue"
-                    }
-                }
-            }
+            stage: 0,
+            currentPatient: {}
         }
 
         this.switchStage = this.switchStage.bind(this);
     }
 
     switchStage(stage, patient) {
-        console.log(patient);
-        this.setState({
-            stage: stage,
-            currentPatient: patient
-        });
+        if (patient) {
+            this.setState({
+                stage: stage,
+                currentPatient: patient
+            });
+        } else {
+            this.setState({
+                stage: stage
+            });
+        }
     }
 
     render() {

@@ -222,7 +222,7 @@ class PatientForm extends Component {
                                 </table>
                             </td>
                             <td style={outerTdStyle}>
-                                Enter Issue: 
+                                Enter Issue*: 
                                 <SingleSelect id="issue" data={this.state.issues} onUpdate={this.updateIssue}/>
                             </td>
                         </tr>
@@ -231,7 +231,7 @@ class PatientForm extends Component {
                             <th style={outerTdStyle}>Team</th>
                         </tr>
                         <tr>
-                            <td style={outerTdStyle}>Enter a Priority (5 is max):
+                            <td style={outerTdStyle}>Enter a Priority (5 is max)*:
                                 <select 
                                     id="priority"
                                     ref="priority">
@@ -244,7 +244,7 @@ class PatientForm extends Component {
                                 </select>
                             </td>
                             <td style={outerTdStyle}>
-                                Enter Team: 
+                                Enter Team*: 
                                 <SingleSelect 
                                     id="team"
                                     data={this.state.teamChoises}
