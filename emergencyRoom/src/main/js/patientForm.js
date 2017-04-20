@@ -26,7 +26,8 @@ class PatientForm extends Component {
             selectedIssue: "",
             selectedTeam: "",
             teamChoises: [],
-            update: false
+            update: false,
+            queue: []
         }
 
         this.submit = this.submit.bind(this);
@@ -34,6 +35,9 @@ class PatientForm extends Component {
         this.updateIssue = this.updateIssue.bind(this);
         this.updateTeam = this.updateTeam.bind(this);
         this.getTeams = this.getTeams.bind(this);
+        this.getPatientsInQueue = this.getPatientsInQueue.bind(this);
+        this.sortQueue = this.sortQueue.bind(this);
+        this.makeQueue = this.makeQueue.bind(this);
     }
 
     componentDidMount() {
@@ -78,6 +82,7 @@ class PatientForm extends Component {
         this.setState({
             selectedTeam: value
         });
+        this.getPatientsInQueue(value)
     }
 
     getTeams(issue) {
@@ -85,7 +90,8 @@ class PatientForm extends Component {
             this.setState({
                 teamChoises: [],
                 selectedTeam: "",
-                selectedIssue: ""
+                selectedIssue: "",
+                queue: []
             });
             return;
         }
@@ -104,8 +110,46 @@ class PatientForm extends Component {
         });
     }
 
-    render() {
+    getPatientsInQueue(teamLink, listOfPatients){
+        if(teamLink == null){
+            this.setState({queue: [], selectedTeam: ""});
+            return;
+        }
+        var path = teamLink + "/queue";
+        this.state.queue = [];
+            client({method: "GET", path: path}).done(response => {
+                response.entity._embedded.patients.map(onePatient => {
+                    this.state.queue.push({
+                        name: onePatient.name,
+                        priority: onePatient.priority
+                    });
+                    this.setState({update: !this.state.update});
+                });
+        }); 
+    }
 
+    sortQueue(unsortedQueue){
+        return unsortedQueue.sort((a,b) => {
+            return b.priority - a.priority;
+        });
+    }
+
+    makeQueue(sortedQueue){
+        var listToReturn =[];
+        sortedQueue.map((onePatient,i) => {
+            listToReturn.push(
+                <li key={i}>
+                    Name: {onePatient.name} - Priority: {onePatient.priority}
+                </li>
+                );
+        });
+        return listToReturn;
+    }
+
+    render() {
+        var sortedQueue = this.sortQueue(this.state.queue);
+        var queue = this.makeQueue(sortedQueue);
+        console.log(sortedQueue);
         return (
             <div>
                 <button onClick={this.toDoctorForm}>Doctor Form</button>
@@ -177,6 +221,16 @@ class PatientForm extends Component {
                                     onUpdate={this.updateTeam}
                                     noResultsText="Enter issue first"
                                 />
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colSpan={2} style={outerTdStyle}>Queue</th>
+                        </tr>
+                        <tr>
+                            <td colSpan={2} style={outerTdStyle}>
+                                <ol>
+                                    {queue}
+                                </ol>
                             </td>
                         </tr>
                     </tbody>
