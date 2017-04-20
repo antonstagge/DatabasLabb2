@@ -19,16 +19,16 @@ public class Patient {
     private String name;
     private long age;
     private boolean female;
-    private long priority;
+    private @NotNull long priority;
     private long waitingTime;
 
     @ManyToOne
     @JoinColumn(name = "issue")
-    private Issue issue;
+    private @NotNull Issue issue;
 
     @ManyToOne
     @JoinColumn(name = "team")
-    private Team team;
+    private @NotNull Team team;
 
     public Patient() {
 

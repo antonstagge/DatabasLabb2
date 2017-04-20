@@ -14,11 +14,11 @@ import javax.validation.constraints.NotNull;
 public class IssueProcedure {
     private @Id @GeneratedValue long issueProcedureId;
     private @NotNull @Column(unique = true) String name;
-    private long cost;
+    private @NotNull long cost;
 
     @ManyToOne
     @JoinColumn(name = "issue")
-    private Issue issue;
+    private @NotNull Issue issue;
 
     public IssueProcedure(){
 
