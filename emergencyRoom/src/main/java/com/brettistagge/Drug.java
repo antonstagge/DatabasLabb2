@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 public class Drug {
     private @Id @GeneratedValue long drugId;
     private @NotNull @Column(unique = true) String name;
-    private @NotNull long cost;
+    private @NotNull Integer cost;
 
     public Drug() {
 

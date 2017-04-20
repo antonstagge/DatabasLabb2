@@ -15,24 +15,24 @@ public class Log {
     private @Id @GeneratedValue long logId;
     private @NotNull @Column(unique = true) long ssn;
     private String name;
-    private long age;
-    private boolean female;
-    private long priority;
-    private long waitingTime;
+    private Integer age;
+    private Boolean female;
+    private Integer priority;
+    private Integer waitingTime;
     private String issueName;
     private String issueProcedureOneName;
-    private long issueProcedureOneCost;
+    private Integer issueProcedureOneCost;
     private String issueProcedureTwoName;
-    private long issueProcedureTwoCost;
+    private Integer issueProcedureTwoCost;
     private String issueProcedureThreeName;
-    private long issueProcedureThreeCost;
+    private Integer issueProcedureThreeCost;
     private String drugOneName;
-    private long drugOneCost;
+    private Integer drugOneCost;
     private String drugTwoName;
-    private long drugTwoCost;
+    private Integer drugTwoCost;
     private String drugThreeName;
-    private long drugThreeCost;
-    private boolean home;
+    private Integer drugThreeCost;
+    private Boolean home;
 
     public Log(){
 

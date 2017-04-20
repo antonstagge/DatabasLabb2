@@ -15,12 +15,12 @@ import javax.validation.constraints.NotNull;
 public class Patient {
 
     private @Id @GeneratedValue long patientId;
-    private @NotNull @Column(unique = true) long ssn;
+    private @NotNull @Column(unique = true) Integer ssn;
     private String name;
-    private long age;
-    private boolean female;
+    private Integer age;
+    private Boolean female;
     private @NotNull long priority;
-    private long waitingTime;
+    private Integer waitingTime;
 
     @ManyToOne
     @JoinColumn(name = "issue")
