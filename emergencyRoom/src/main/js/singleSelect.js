@@ -10,7 +10,6 @@ class SingleSelect extends Component {
         //TODO: disabled as a prop
         this.state = {
             disabled: false,
-            crazy: false,
             options: [],
             value: null
         };

@@ -23,12 +23,17 @@ class PatientForm extends Component {
         super(props);
         this.state = {
             issues: [],
-            issue: ""
+            selectedIssue: "",
+            selectedTeam: "",
+            teamChoises: [],
+            update: false
         }
 
         this.submit = this.submit.bind(this);
         this.toDoctorForm = this.toDoctorForm.bind(this);
         this.updateIssue = this.updateIssue.bind(this);
+        this.updateTeam = this.updateTeam.bind(this);
+        this.getTeams = this.getTeams.bind(this);
     }
 
     componentDidMount() {
@@ -47,23 +52,60 @@ class PatientForm extends Component {
     }
 
     submit() {
+        var patient = {};
         Object.keys(this.refs).map(oneKey => {
-            console.log(oneKey + ":" + this.refs[oneKey].value);
+            patient[oneKey] = this.refs[oneKey].value;
         });
+        patient["issue"] = this.state.selectedIssue;
+        patient["team"] = this.state.selectedTeam;
+
+        console.log(patient);
+        //var newPatient = patientInputCheck(patient);
     }
 
-    toDoctorForm(){
+    toDoctorForm() {
         this.props.switchStage(1);
     }
 
-    updateIssue(value, id) {
-        console.log(value);
+    updateIssue(value) {
         this.setState({
-            issue: value
+            selectedIssue: value
+        });
+        this.getTeams(value);
+    }
+
+    updateTeam(value) {
+        this.setState({
+            selectedTeam: value
+        });
+    }
+
+    getTeams(issue) {
+        if (issue == null) {
+            this.setState({
+                teamChoises: [],
+                selectedTeam: "",
+                selectedIssue: ""
+            });
+            return;
+        }
+        var path = issue + "/canBeTreatedBy";
+        this.state.teamChoises = [];
+        client({method: "GET", path: path}).done(response => {
+            response.entity._embedded.canTreats.map(oneCanTreat => {
+                client({method: "GET", path: oneCanTreat._links.team.href}).done(response => {
+                    this.state.teamChoises.push({
+                        label: response.entity.name,
+                        value: response.entity._links.self.href
+                    });
+                    this.setState({update: !this.state.update});
+                });
+            });
         });
     }
 
     render() {
+
         return (
             <div>
                 <button onClick={this.toDoctorForm}>Doctor Form</button>
@@ -127,7 +169,15 @@ class PatientForm extends Component {
                                     <option value={5}>5</option>
                                 </select>
                             </td>
-                            <td style={outerTdStyle}>blu</td>
+                            <td style={outerTdStyle}>
+                                Enter Team: 
+                                <SingleSelect 
+                                    id="team"
+                                    data={this.state.teamChoises}
+                                    onUpdate={this.updateTeam}
+                                    noResultsText="Enter issue first"
+                                />
+                            </td>
                         </tr>
                     </tbody>
                 </table>
