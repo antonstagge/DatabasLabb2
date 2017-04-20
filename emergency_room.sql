@@ -14,8 +14,8 @@ CREATE TABLE team(
 #Can treat table
 CREATE TABLE can_treat(
     can_treat_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    team INT UNSIGNED,
-    issue INT UNSIGNED,
+    team INT UNSIGNED NOT NULL,
+    issue INT UNSIGNED NOT NULL,
     UNIQUE KEY(team, issue),
     FOREIGN KEY (team) REFERENCES team(team_id),
     FOREIGN KEY (issue) REFERENCES issue(issue_id)
@@ -25,8 +25,8 @@ CREATE TABLE can_treat(
 CREATE TABLE issue_procedure(
     issue_procedure_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL UNIQUE,
-    cost INT UNSIGNED,
-    issue INT UNSIGNED,
+    cost INT UNSIGNED NOT NULL,
+    issue INT UNSIGNED NOT NULL,
     FOREIGN KEY (issue) REFERENCES issue(issue_id)
 );
 
@@ -35,9 +35,9 @@ CREATE TABLE patient(
     patient_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ssn INT UNSIGNED NOT NULL UNIQUE,
     name VARCHAR(40),
-    age INT UNSIGNED,
-    female BOOL,
-    priority INT UNSIGNED,
+    age INT UNSIGNED DEFAULT NULL,
+    female BOOL DEFAULT NULL,
+    priority INT UNSIGNED NOT NULL,
     waiting_time INT UNSIGNED,
     issue INT UNSIGNED NOT NULL,
     team INT UNSIGNED NOT NULL,
@@ -49,31 +49,31 @@ CREATE TABLE patient(
 CREATE TABLE drug(
     drug_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL UNIQUE,
-    cost INT UNSIGNED
+    cost INT UNSIGNED NOT NULL
 );
 
 #log table
 CREATE TABLE log(
     log_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     ssn INT UNSIGNED NOT NULL UNIQUE,
-    name VARCHAR(40),
-    age INT UNSIGNED,
-    female BOOL,
-    priority INT UNSIGNED,
-    waiting_time INT UNSIGNED,
-    issue_name VARCHAR(40),
-    issue_procedure_one_name VARCHAR(40),
-    issue_procedure_one_cost INT UNSIGNED,
-    issue_procedure_two_name VARCHAR(40),
-    issue_procedure_two_cost INT UNSIGNED,
-    issue_procedure_three_name VARCHAR(40),
-    issue_procedure_three_cost INT UNSIGNED,
-    drug_one_name VARCHAR(40),
-    drug_one_cost INT UNSIGNED,
-    drug_two_name VARCHAR(40),
-    drug_two_cost INT UNSIGNED,
-    drug_three_name VARCHAR(40),
-    drug_three_cost INT UNSIGNED,
-    home BOOL
+    name VARCHAR(40) DEFAULT NULL,
+    age INT UNSIGNED DEFAULT NULL,
+    female BOOL DEFAULT NULL,
+    priority INT UNSIGNED DEFAULT NULL,
+    waiting_time INT UNSIGNED DEFAULT NULL,
+    issue_name VARCHAR(40) DEFAULT NULL,
+    issue_procedure_one_name VARCHAR(40) DEFAULT NULL,
+    issue_procedure_one_cost INT UNSIGNED DEFAULT NULL,
+    issue_procedure_two_name VARCHAR(40) DEFAULT NULL,
+    issue_procedure_two_cost INT UNSIGNED DEFAULT NULL,
+    issue_procedure_three_name VARCHAR(40) DEFAULT NULL,
+    issue_procedure_three_cost INT UNSIGNED DEFAULT NULL,
+    drug_one_name VARCHAR(40) DEFAULT NULL,
+    drug_one_cost INT UNSIGNED DEFAULT NULL,
+    drug_two_name VARCHAR(40) DEFAULT NULL,
+    drug_two_cost INT UNSIGNED DEFAULT NULL,
+    drug_three_name VARCHAR(40) DEFAULT NULL,
+    drug_three_cost INT UNSIGNED DEFAULT NULL,
+    home BOOL DEFAULT NULL
 );
 
