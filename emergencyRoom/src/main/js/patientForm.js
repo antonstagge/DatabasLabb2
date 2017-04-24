@@ -206,7 +206,7 @@ class PatientForm extends Component {
                                         </tr>
                                         <tr>
                                             <th>SSN*</th>
-                                            <td style={innerTdStyle}><input ref="ssn" type="number" placeholder="YYMMDD"/></td>
+                                            <td style={innerTdStyle}><input ref="ssn" type="number" placeholder="YYMMDDXXXX"/></td>
                                         </tr>
                                         <tr>
                                             <th>Gender</th>
