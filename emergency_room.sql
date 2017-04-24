@@ -45,7 +45,7 @@ CREATE TABLE patient(
     FOREIGN KEY (team) REFERENCES team(team_id)
 );
 
-#druuugs
+#drugs table
 CREATE TABLE drug(
     drug_id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL UNIQUE,
